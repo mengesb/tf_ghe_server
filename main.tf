@@ -214,7 +214,7 @@ resource "aws_instance" "ghe-server" {
   }
 }
 resource "template_file" "ghe-server-creds" {
-  template = "${path.module}/files/ghe-server-creds.tpl"
+  template = "${file("${path.module}/files/ghe-server-creds.tpl")}"
   vars {
     user = "admin"
     pass = "${base64sha256(aws_instance.ghe-server.id)}"
