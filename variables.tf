@@ -136,6 +136,10 @@ variable "hostname" {
   description = "Basename for AWS Name tag of CHEF Server"
   default = "ghe-01"
 }
+variable "log_to_file" {
+  description = "Output chef-client runtime to logfiles/"
+  default     = true
+}
 variable "public_ip" {
   description = "Associate a public IP to the instance"
   default     = true

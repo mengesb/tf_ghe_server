@@ -171,6 +171,7 @@ resource "aws_instance" "ghe-server" {
   provisioner "chef" {
     attributes_json = "${template_file.attributes-json.rendered}"
     run_list        = ["system::default"]
+    log_to_file     = "${var.log_to_file}"
     node_name       = "${var.hostname}.${var.domain}"
     server_url      = "https://${var.chef_fqdn}/organizations/${var.chef_org}"
     validation_client_name = "${var.chef_org}-validator"
