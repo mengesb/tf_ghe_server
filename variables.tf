@@ -140,6 +140,10 @@ variable "public_ip" {
   description = "Associate a public IP to the instance"
   default     = true
 }
+variable "root_delete_termination" {
+  description = "Delete server root block device on termination"
+  default     = true
+}
 variable "server_count" {
   description = "Number of CHEF Servers to provision. DO NOT CHANGE!"
   default = 1
