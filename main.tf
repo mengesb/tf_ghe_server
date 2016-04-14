@@ -145,7 +145,7 @@ resource "aws_instance" "ghe-server" {
     Name = "${var.hostname}.${var.domain}"
   }
   root_block_device = {
-    delete_on_termination = true
+    delete_on_termination = "${var.root_delete_termination}"
   }
   # seperate device for GHE to use at /data
   ebs_block_device {
