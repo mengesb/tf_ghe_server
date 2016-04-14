@@ -123,40 +123,6 @@ provider "aws" {
   secret_key = "${var.aws_secret_key}"
   region = "${var.aws_region}"
 }
-resource "aws_route53_record" "ghe-server-public" {
-  count = "${var.r53}"
-  zone_id = "${var.r53_zone_id}"
-  name = "${aws_instance.ghe-server.tags.Name}"
-  type = "A"
-  ttl = "${var.r53_ttl}"
-  records = ["${aws_instance.ghe-server.public_ip}"]
-}
-resource "aws_route53_record" "ghe-server-private" {
-  count = "${var.r53}"
-  zone_id = "${var.r53_zone_internal_id}"
-  name = "${aws_instance.ghe-server.tags.Name}"
-  type = "A"
-  ttl = "${var.r53_ttl}"
-  records = ["${aws_instance.ghe-server.private_ip}"]
-}
-# TODO: Look into setting up the reply server... maybe
-#resource "aws_route53_record" "ghe-server-cname" {
-#  count = "${lookup(var.boolean_map, var.r53)}"
-#  zone_id = "${var.r53_zone_id}"
-#  name = "reply.${aws_instance.ghe-server.tags.Name}"
-#  type = "CNAME"
-#  ttl = "180"
-#  records = ["${aws_instance.ghe-server.tags.Name}"]
-#}
-#resource "aws_route53_record" "ghe-server-mx" {
-#  count = "${lookup(var.boolean_map, var.r53)}"
-#  zone_id = "${var.r53_zone_id}"
-#  name = "${aws_instance.ghe-server.tags.Name}"
-#  weight = 10
-#  type = "MX"
-#  ttl = "180"
-#  records = ["reply.${aws_instance.ghe-server.tags.Name}"]
-#}
 resource "template_file" "attributes-json" {
   template    = "${file("${path.module}/files/attributes-json.tpl")}"
   vars {
@@ -168,10 +134,10 @@ resource "template_file" "attributes-json" {
 }
 # Provision GHE Server
 resource "aws_instance" "ghe-server" {
-  #ami = "${var.aws_ami_id}"
   ami = "${lookup(var.ami_map, "${var.aws_region}-${var.ghe_version}")}"
   count = "${var.server_count}"
   instance_type = "${var.aws_flavor}"
+  associate_public_ip_address = "${var.public_ip}"
   subnet_id = "${var.aws_subnet_id}"
   vpc_security_group_ids = ["${aws_security_group.ghe-server.id}"]
   key_name = "${var.aws_key_name}"
@@ -204,13 +170,12 @@ resource "aws_instance" "ghe-server" {
   # Provision with Chef
   provisioner "chef" {
     attributes_json = "${template_file.attributes-json.rendered}"
-    # environment     = "_default"
     run_list        = ["system::default"]
     node_name       = "${var.hostname}.${var.domain}"
-    #secret_key      = "${file("${var.secret_key_file}")}"
     server_url      = "https://${var.chef_fqdn}/organizations/${var.chef_org}"
     validation_client_name = "${var.chef_org}-validator"
     validation_key  = "${file("${var.chef_org_validator}")}"
+    version         = "${var.client_version}"
   }
 }
 resource "template_file" "ghe-server-creds" {

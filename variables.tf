@@ -31,8 +31,30 @@ variable "aws_vpc_id" {
 # AMI mapping
 #
 variable "ami_map" {
-  description = "AMI mapping for GHE 2.5.1 installation based on AWS region"
+  description = "AMI mapping for GHE 2.5.x installation based on AWS region"
   default = {
+    ap-northeast-1-2.5.4 = "ami-daecfab4"
+    ap-northeast-2-2.5.4 = "ami-05fb326b"
+    ap-southeast-1-2.5.4 = "ami-64458f07"
+    ap-southeast-2-2.5.4 = "ami-c3f0d3a0"
+    eu-central-1-2.5.4   = "ami-858564ea"
+    eu-west-1-2.5.4      = "ami-4bc94838"
+    sa-east-1-2.5.4      = "ami-8be669e7"
+    us-east-1-2.5.4      = "ami-e76b618d"
+    us-west-1-2.5.4      = "ami-96fb86f6"
+    us-west-2-2.5.4      = "ami-c57a90a5"
+    us-gov-west-1-2.5.4  = "ami-13219d72"
+    ap-northeast-1-2.5.3 = "ami-71edfa1f"
+    ap-northeast-2-2.5.3 = "ami-c8c50ca6"
+    ap-southeast-1-2.5.3 = "ami-8419d3e7"
+    ap-southeast-2-2.5.3 = "ami-532c0f30"
+    eu-central-1-2.5.3   = "ami-f16a8c9e"
+    eu-west-1-2.5.3      = "ami-7f8d0b0c"
+    sa-east-1-2.5.3      = "ami-981e92f4"
+    us-east-1-2.5.3      = "ami-19d4dc73"
+    us-west-1-2.5.3      = "ami-6a403d0a"
+    us-west-2-2.5.3      = "ami-93ea00f3"
+    us-gov-west-1-2.5.3  = "ami-d43b87b5"
     ap-northeast-1-2.5.2 = "ami-4fe8e021"
     ap-northeast-2-2.5.2 = "ami-7c804912"
     ap-southeast-1-2.5.2 = "ami-b7d912d4"
@@ -74,7 +96,7 @@ variable "ami_user" {
 }
 variable "ghe_version" {
   description = "GitHub Enterprise version (https://enterprise.github.com/releases)"
-  default = "2.5.2"
+  default = "2.5.4"
 }
 #
 # specific configs
@@ -96,9 +118,10 @@ variable "chef_org" {
 variable "chef_org_validator" {
   descirption = "Path to validation pem for ${var.chef_org}"
 }
-#variable "chef_sg" {
-#  description = "Chef Server security group id"
-#}
+variable "client_version" {
+  description = "Version of the chef-client software to install"
+  default     = "12.8.1"
+}
 variable "domain" {
   description = "Domain name of the server created"
   default = "localdomain"
@@ -113,21 +136,9 @@ variable "hostname" {
   description = "Basename for AWS Name tag of CHEF Server"
   default = "ghe-01"
 }
-variable "r53" {
-  description = "Boolean: Use Route53?"
-  default = 0
-}
-variable "r53_ttl" {
-  description = "Route53 A record TTL (Default: 180)"
-  default     = 180
-}
-variable "r53_zone_internal_id" {
-  description = "Route53 zone id for internal DNS"
-  default     = 0
-}
-variable "r53_zone_id" {
-  description = "Route53 Zone ID"
-  default = 0
+variable "public_ip" {
+  description = "Associate a public IP to the instance"
+  default     = true
 }
 variable "server_count" {
   description = "Number of CHEF Servers to provision. DO NOT CHANGE!"
@@ -145,12 +156,6 @@ variable "sgrule_snmp" {
   description = "Boolean: Allow SNMP server security group rule"
   default     = 0
 }
-#variable "ssl_cert" {
-#  description = "SSL Certificate in PEM format"
-#}
-#variable "ssl_key" {
-#  description = "Key for SSL Certificate"
-#}
 variable "tag_description" {
   description = "AWS description tag text"
   default     = "Created using Terraform (tf_chef_server)"
