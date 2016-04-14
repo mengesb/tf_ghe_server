@@ -66,7 +66,7 @@ These resources will incur charges on your AWS bill. It is your responsibility t
 * `aws_subnet_id`: The AWS id of the subnet to use. Example: `subnet-ffffffff`
 * `aws_vpc_id`: The AWS id of the VPC to use. Example: `vpc-ffffffff`
 
-### tf_chef_server variables
+### tf_ghe_server variables
 
 * `allowed_cidrs`: The comma seperated list of addresses in CIDR format to allow SSH access. Default: `0.0.0.0/0`
 * `allowed_commit_cidrs`: The comma seperated list of addresses in CIDR format to allow GIT over 22/tcp access. Default: `0.0.0.0/0`
@@ -128,13 +128,10 @@ ami_usermap.<ami_os> = "value"
 
 ## Outputs
 
-* `credentials`: Formatted text output with details about the Chef Server
+* `credentials`: Formatted text output with details about this instance
 * `fqdn`: The fully qualified domain name of the server
-* `organization`: The short form name of the organization created on the Chef Server
-* `organization_validator`: Validation PEM file
-* `public_ip`: The public IP address of the instance
 * `private_ip`: The private IP address of the instance
-* `secret_file`: The encrypted data bag secret file
+* `public_ip`: The public IP address of the instance
 * `security_group_id`: The AWS security group id for this instance
 
 ## Contributors
@@ -143,7 +140,7 @@ ami_usermap.<ami_os> = "value"
 
 ## Runtime sample
 
-You can view a runtime output sample here: [tf_chef_server-runtime.txt](https://gist.github.com/mengesb/dbc393ee9aeaf2c0a9a7)
+Example runtime not yet available
 
 ## Contributing
 
