@@ -178,6 +178,17 @@ resource "aws_instance" "ghe-server" {
     validation_key  = "${file("${var.chef_org_validator}")}"
     version         = "${var.client_version}"
   }
+  # Hostname issues... rebooting
+  provisioner "remote-exec" {
+    inline = [
+      "sudo reboot"
+    ]
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "echo 'ready'"
+    ]
+  }
 }
 resource "template_file" "ghe-server-creds" {
   template = "${file("${path.module}/files/ghe-server-creds.tpl")}"
@@ -190,7 +201,7 @@ resource "template_file" "ghe-server-creds" {
 resource "null_resource" "ghe-configure" {
   # Use the API to setup the rest from JSON file
   provisioner "local-exec" {
-    command = "sleep 2 && curl -kLs --resolve ${aws_instance.ghe-server.tags.Name}:8443:${aws_instance.ghe-server.public_ip} -X POST 'https://${aws_instance.ghe-server.tags.Name}:8443/setup/api/start' -F license=@${var.ghe_license} -F 'password=${base64sha256(aws_instance.ghe-server.id)}' -F 'settings=<${var.ghe_settings}'"
+    command = "curl 5 && curl -kLs --resolve ${aws_instance.ghe-server.tags.Name}:8443:${aws_instance.ghe-server.public_ip} -X POST 'https://${aws_instance.ghe-server.tags.Name}:8443/setup/api/start' -F license=@${var.ghe_license} -F 'password=${base64sha256(aws_instance.ghe-server.id)}' -F 'settings=<${var.ghe_settings}'"
   }
   # Tell GHE to start configuring
   provisioner "local-exec" {
