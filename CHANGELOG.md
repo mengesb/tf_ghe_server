@@ -3,6 +3,10 @@ tf_ghe_server CHANGELOG
 
 This file is used to list changes made in each version of the tf_ghe_server Terraform plan.
 
+v0.1.2 (2016-04-13)
+-------------------
+- [Brian Menges] - Add `log_to_file` variable
+
 v0.1.1 (2016-04-13)
 -------------------
 - [Brian Menges] - Add `root_delete_termination` variable
