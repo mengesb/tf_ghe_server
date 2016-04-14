@@ -3,6 +3,14 @@ tf_ghe_server CHANGELOG
 
 This file is used to list changes made in each version of the tf_ghe_server Terraform plan.
 
+v0.1.5 (2016-04-13)
+-------------------
+- [Brian Menges] - fix curl command
+
+v0.1.4 (2016-04-13)
+-------------------
+- [Brian Menges] - add delay
+
 v0.1.3 (2016-04-13)
 -------------------
 - [Brian Menges] - Add some delay in the cookbook to api call
