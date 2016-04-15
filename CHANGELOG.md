@@ -3,6 +3,12 @@ tf_ghe_server CHANGELOG
 
 This file is used to list changes made in each version of the tf_ghe_server Terraform plan.
 
+v0.1.6 (2016-04-15)
+-------------------
+- [Brian Menges] - Update `attributes-json.tpl`, set `system` cookbook to restart network immediately on set
+- [Brian Menges] - Alphabetize `attributes-json.tpl`, except for `fqdn`
+- [Brian Menges] - Add attributes and run_list to setup chef-client as cron job with splay
+
 v0.1.5 (2016-04-13)
 -------------------
 - [Brian Menges] - fix curl command
