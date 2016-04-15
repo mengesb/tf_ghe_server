@@ -3,6 +3,10 @@ tf_ghe_server CHANGELOG
 
 This file is used to list changes made in each version of the tf_ghe_server Terraform plan.
 
+v0.1.7 (2016-04-15)
+-------------------
+- [Brian Menges] - Fix syntax error in `attributes-json.tpl`
+
 v0.1.6 (2016-04-15)
 -------------------
 - [Brian Menges] - Update `attributes-json.tpl`, set `system` cookbook to restart network immediately on set
