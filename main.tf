@@ -167,6 +167,13 @@ resource "aws_instance" "ghe-server" {
       "mkdir -p ~/.ghe"
     ]
   }
+  # Ensure previous invocations are dead to us
+  provisioner "local-exec" {
+    command = "knife node-delete   ${var.hostname}.${var.domain} -y -c ${var.knife_rb} ; echo OK"
+  }
+  provisioner "local-exec" {
+    command = "knife client-delete ${var.hostname}.${var.domain} -y -c ${var.knife_rb} ; echo OK"
+  }
   # Provision with Chef
   provisioner "chef" {
     attributes_json = "${template_file.attributes-json.rendered}"
