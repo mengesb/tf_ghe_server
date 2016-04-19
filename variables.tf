@@ -136,6 +136,10 @@ variable "hostname" {
   description = "Basename for AWS Name tag of CHEF Server"
   default = "ghe-01"
 }
+variable "knife_rb" {
+  description = "Path to your knife.rb configuration"
+  default     = ".chef/knife.rb"
+}
 variable "log_to_file" {
   description = "Output chef-client runtime to logfiles/"
   default     = true
