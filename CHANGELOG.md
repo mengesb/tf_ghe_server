@@ -3,6 +3,10 @@ tf_ghe_server CHANGELOG
 
 This file is used to list changes made in each version of the tf_ghe_server Terraform plan.
 
+v0.1.10 (2016-04-16)
+-------------------
+- [Brian Menges] - Using `wait_on` in `null_resource` to enforce waiting
+
 v0.1.9 (2016-04-15)
 -------------------
 - [Brian Menges] - Added variable `knife_rb` to handle node deletes

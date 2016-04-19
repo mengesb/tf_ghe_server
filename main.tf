@@ -132,8 +132,14 @@ resource "template_file" "attributes-json" {
     domain    = "${var.domain}"
   }
 }
+resource "null_resource" "wait_on" {
+  provisioner "local-exec" {
+    command = "echo Waited on ${var.wait_on} before proceeding"
+  }
+}
 # Provision GHE Server
 resource "aws_instance" "ghe-server" {
+  depends_on = ["null_resource.wait_on"]
   ami = "${lookup(var.ami_map, "${var.aws_region}-${var.ghe_version}")}"
   count = "${var.server_count}"
   instance_type = "${var.aws_flavor}"
