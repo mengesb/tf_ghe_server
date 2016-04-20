@@ -3,6 +3,12 @@ tf_ghe_server CHANGELOG
 
 This file is used to list changes made in each version of the tf_ghe_server Terraform plan.
 
+v.1.0.0 (2016-04-20)
+-------------------
+- [Brian Menges] - Code review
+- [Brian Menges] - Add firewall rules resource link to comment
+- [Brian Menges] - Release v1.0.0
+
 v0.1.10 (2016-04-16)
 -------------------
 - [Brian Menges] - Using `wait_on` in `null_resource` to enforce waiting
