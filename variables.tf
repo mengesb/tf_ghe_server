@@ -94,10 +94,6 @@ variable "ami_user" {
   description = "AWS AMI default username"
   default = "admin"
 }
-variable "ghe_version" {
-  description = "GitHub Enterprise version (https://enterprise.github.com/releases)"
-  default = "2.5.4"
-}
 #
 # specific configs
 #
@@ -131,6 +127,10 @@ variable "ghe_license" {
 }
 variable "ghe_settings" {
   description = "GitHub Enterprise settings file (JSON)"
+}
+variable "ghe_version" {
+  description = "GitHub Enterprise version (https://enterprise.github.com/releases)"
+  default = "2.5.4"
 }
 variable "hostname" {
   description = "Basename for AWS Name tag of CHEF Server"
