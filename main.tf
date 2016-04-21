@@ -188,7 +188,7 @@ resource "aws_instance" "ghe-server" {
   # Provision with Chef
   provisioner "chef" {
     attributes_json = "${template_file.attributes-json.rendered}"
-    run_list        = ["system::default","recipe[chef-client::default]","recipe[chef-client::config]","recipe[chef-client::delete_validation]"]
+    run_list        = ["system::default","recipe[chef-client::default]","recipe[chef-client::config]","recipe[chef-client::cron]","recipe[chef-client::delete_validation]"]
     log_to_file     = "${var.log_to_file}"
     node_name       = "${var.hostname}.${var.domain}"
     server_url      = "https://${var.chef_fqdn}/organizations/${var.chef_org}"
