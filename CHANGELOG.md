@@ -3,6 +3,10 @@ tf_ghe_server CHANGELOG
 
 This file is used to list changes made in each version of the tf_ghe_server Terraform plan.
 
+v.1.0.1 (2016-04-20)
+-------------------
+- [Brian Menges] - Added chef-client::cron to run_list
+
 v.1.0.0 (2016-04-20)
 -------------------
 - [Brian Menges] - Code review
