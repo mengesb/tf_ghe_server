@@ -217,6 +217,7 @@ resource "template_file" "ghe-server-creds" {
   }
 }
 resource "null_resource" "ghe-configure" {
+  depends_on = ["aws_instance.ghe-server"]
   # Use the API to setup the rest from JSON file
   provisioner "local-exec" {
     command = "sleep 5 && curl -kLs --resolve ${aws_instance.ghe-server.tags.Name}:8443:${aws_instance.ghe-server.public_ip} -X POST 'https://${aws_instance.ghe-server.tags.Name}:8443/setup/api/start' -F license=@${var.ghe_license} -F 'password=${base64sha256(aws_instance.ghe-server.id)}' -F 'settings=<${var.ghe_settings}'"
