@@ -33,6 +33,17 @@ variable "aws_vpc_id" {
 variable "ami_map" {
   description = "AMI mapping for GHE 2.5.x installation based on AWS region"
   default = {
+    ap-northeast-1-2.6.0 = "ami-6eacb500"
+    ap-northeast-2-2.6.0 = "ami-1a22ea74"
+    ap-southeast-1-2.6.0 = "ami-516cb832"
+    ap-southeast-2-2.6.0 = "ami-71fbd612"
+    eu-central-1-2.6.0   = "ami-b97f9cd6"
+    eu-west-1-2.6.0      = "ami-038b0570"
+    sa-east-1-2.6.0      = "ami-db33bdb7"
+    us-east-1-2.6.0      = "ami-74acb61e"
+    us-west-1-2.6.0      = "ami-085f2168"
+    us-west-2-2.6.0      = "ami-d3d525b3"
+    us-gov-west-1-2.6.0  = "ami-b1b609d0"
     ap-northeast-1-2.5.4 = "ami-daecfab4"
     ap-northeast-2-2.5.4 = "ami-05fb326b"
     ap-southeast-1-2.5.4 = "ami-64458f07"
@@ -130,11 +141,11 @@ variable "ghe_settings" {
 }
 variable "ghe_version" {
   description = "GitHub Enterprise version (https://enterprise.github.com/releases)"
-  default = "2.5.4"
+  default = "2.6.0"
 }
 variable "hostname" {
   description = "Basename for AWS Name tag of CHEF Server"
-  default = "ghe-01"
+  default = "github"
 }
 variable "knife_rb" {
   description = "Path to your knife.rb configuration"
