@@ -1,5 +1,3 @@
-
-Management Username: admin
 Management Password: ${pass}
-Management UI: https://${fqdn}:8443/
-
+Management Login: https://${fqdn}:8443
+Web Login (normal): https://${fqdn}
