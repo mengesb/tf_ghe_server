@@ -163,6 +163,14 @@ variable "root_delete_termination" {
   description = "Delete server root block device on termination"
   default     = true
 }
+variable "root_volume_size" {
+  description = "Size in GB of root device"
+  default     = 20
+}
+variable "root_volume_type" {
+  description = "Type of root volume"
+  default     = "standard"
+}
 variable "server_count" {
   description = "Number of CHEF Servers to provision. DO NOT CHANGE!"
   default = 1
