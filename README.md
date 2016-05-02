@@ -81,6 +81,8 @@ These resources will incur charges on your AWS bill. It is your responsibility t
 * `log_to_file`: Log chef-client to file. Default: `true`
 * `public_ip`: Associate public IP to instance. Default `true`
 * `root_delete_termination`: Delete root device on VM termination. Default: `true`
+* `root_volume_size`: Size of the root volume in GB. Default: `20`
+* `root_volume_type`: Type of root volume. Supports `gp2` and `standard`. Default `standard`
 * `server_count`: Server count. Default: `1`; DO NOT CHANGE!
 * `sgrule_ntp`: Boolean to create security group rule allowing NTP. Default: `0`
 * `sgrule_smtp`: Boolean to create security group rule allowing SMTP. Default: `0`
@@ -100,7 +102,8 @@ ami_map.<aws_region>-<ghe_version> = "value"
 
 Variable `ghe_version` should be one of the following:
 
-* 2.5.4 (default)
+* 2.6.0 (default)
+* 2.5.4
 * 2.5.3
 * 2.5.2
 * 2.5.1
@@ -148,7 +151,7 @@ Please understand that this is a work in progress and is subject to change rapid
 
 ## `CHANGELOG`
 
-Please refer to the [`CHANGELOG.md`](CHANGELOG.md)
+Please refer to the [CHANGELOG.md](CHANGELOG.md)
 
 ## License
 

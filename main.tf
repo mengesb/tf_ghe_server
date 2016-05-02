@@ -157,6 +157,12 @@ resource "aws_instance" "ghe-server" {
   }
   root_block_device = {
     delete_on_termination = "${var.root_delete_termination}"
+    volume_size = "${var.root_volume_size}"
+    volume_type = "${var.root_volume_type}"
+    tags = {
+      Name        = "${var.hostname}.${var.domain}"
+      Description = "${var.tag_description}"
+    }
   }
   # seperate device for GHE to use at /data
   ebs_block_device {
