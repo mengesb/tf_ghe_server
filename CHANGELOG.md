@@ -3,6 +3,11 @@ tf_ghe_server CHANGELOG
 
 This file is used to list changes made in each version of the tf_ghe_server Terraform plan.
 
+v1.1.3 (2016-05-03)
+-------------------
+- [Brian Menges] - Update `ami_map` for [GitHub Enterprise v2.6.1](https://enterprise.github.com/releases/2.6.1/notes)
+- [Brian Menges] - Change default `ghe_version` to `2.6.1`
+
 v1.1.2 (2016-05-03)
 -------------------
 - [Brian Menges] - GHE default root device size >= 60 GB
