@@ -165,7 +165,7 @@ variable "root_delete_termination" {
 }
 variable "root_volume_size" {
   description = "Size in GB of root device"
-  default     = 20
+  default     = 60
 }
 variable "root_volume_type" {
   description = "Type of root volume"
