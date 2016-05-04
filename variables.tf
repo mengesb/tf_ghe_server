@@ -31,8 +31,19 @@ variable "aws_vpc_id" {
 # AMI mapping
 #
 variable "ami_map" {
-  description = "AMI mapping for GHE 2.5.x installation based on AWS region"
+  description = "AMI mapping for GHE 2.x.y installation based on AWS region"
   default = {
+    ap-northeast-1-2.6.1 = "ami-57b9a339"
+    ap-northeast-2-2.6.1 = "ami-40448c2e"
+    ap-southeast-1-2.6.1 = "ami-ca3deaa9"
+    ap-southeast-2-2.6.1 = "ami-e2391581"
+    eu-central-1-2.6.1   = "ami-ee779581"
+    sa-east-1-2.6.1      = "ami-7264ec01"
+    eu-west-1-2.6.1      = "ami-f545cc99"
+    us-east-1-2.6.1      = "ami-8fc525e2"
+    us-west-1-2.6.1      = "ami-7f146d1f"
+    us-west-2-2.6.1      = "ami-9e897bfe"
+    us-gov-west-1-2.6.1  = "ami-879d22e6"
     ap-northeast-1-2.6.0 = "ami-6eacb500"
     ap-northeast-2-2.6.0 = "ami-1a22ea74"
     ap-southeast-1-2.6.0 = "ami-516cb832"
@@ -141,7 +152,7 @@ variable "ghe_settings" {
 }
 variable "ghe_version" {
   description = "GitHub Enterprise version (https://enterprise.github.com/releases)"
-  default = "2.6.0"
+  default = "2.6.1"
 }
 variable "hostname" {
   description = "Basename for AWS Name tag of CHEF Server"
