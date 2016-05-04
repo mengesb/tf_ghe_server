@@ -3,6 +3,10 @@ tf_ghe_server CHANGELOG
 
 This file is used to list changes made in each version of the tf_ghe_server Terraform plan.
 
+v1.1.2 (2016-05-03)
+-------------------
+- [Brian Menges] - GHE default root device size >= 60 GB
+
 v1.1.1 (2016-05-02)
 -------------------
 - [Brian Menges] - Remove tags on roob_block_device
