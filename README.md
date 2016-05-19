@@ -9,6 +9,7 @@ Terraform GitHub Enterprise plan
   * AWS VPC id
   * SSL certificate/key for created instance
   * Terraform >= 0.6.14
+  * Chef Server >= 12.x
 * Uses a public IP and public DNS
 * Creates default security group as follows:
   * 22/tcp: SSH
@@ -70,6 +71,7 @@ These resources will incur charges on your AWS bill. It is your responsibility t
 
 * `allowed_cidrs`: The comma seperated list of addresses in CIDR format to allow SSH access. Default: `0.0.0.0/0`
 * `allowed_commit_cidrs`: The comma seperated list of addresses in CIDR format to allow GIT over 22/tcp access. Default: `0.0.0.0/0`
+* `chef_env`: Chef environment to join upon provisioning. Default: `_default`
 * `chef_fqdn`: Fully qualified domain name of the Chef Server
 * `chef_org`: Short name of the Chef organization
 * `chef_org_validator`: Orginazation validator file for Chef organziation `chef_org`

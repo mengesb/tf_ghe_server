@@ -33,17 +33,30 @@ variable "aws_vpc_id" {
 variable "ami_map" {
   description = "AMI mapping for GHE 2.x.y installation based on AWS region"
   default = {
+    ap-northeast-1-2.6.2 = "ami-2529c844"
+    ap-northeast-2-2.6.2 = "ami-d0854ebe"
+    ap-southeast-1-2.6.2 = "ami-7955831a"
+    ap-southeast-2-2.6.2 = "ami-bf341bdc"
+    eu-central-1-2.6.2   = "ami-05e10d6a"
+    eu-west-1-2.6.2      = "ami-6d6bff1e"
+    sa-east-1-2.6.2      = "ami-255fd749"
+    us-east-1-2.6.2      = "ami-3fa24952"
+    us-west-1-2.6.2      = "ami-54433b34"
+    us-west-2-2.6.2      = "ami-5cba453c"
+    us-gov-west-1-2.6.2  = "ami-aa4cf3cb"
+
     ap-northeast-1-2.6.1 = "ami-57b9a339"
     ap-northeast-2-2.6.1 = "ami-40448c2e"
     ap-southeast-1-2.6.1 = "ami-ca3deaa9"
     ap-southeast-2-2.6.1 = "ami-e2391581"
     eu-central-1-2.6.1   = "ami-ee779581"
-    sa-east-1-2.6.1      = "ami-7264ec01"
-    eu-west-1-2.6.1      = "ami-f545cc99"
+    eu-west-1-2.6.1      = "ami-7264ec01"
+    sa-east-1-2.6.1      = "ami-f545cc99"
     us-east-1-2.6.1      = "ami-8fc525e2"
     us-west-1-2.6.1      = "ami-7f146d1f"
     us-west-2-2.6.1      = "ami-9e897bfe"
     us-gov-west-1-2.6.1  = "ami-879d22e6"
+
     ap-northeast-1-2.6.0 = "ami-6eacb500"
     ap-northeast-2-2.6.0 = "ami-1a22ea74"
     ap-southeast-1-2.6.0 = "ami-516cb832"
@@ -55,6 +68,19 @@ variable "ami_map" {
     us-west-1-2.6.0      = "ami-085f2168"
     us-west-2-2.6.0      = "ami-d3d525b3"
     us-gov-west-1-2.6.0  = "ami-b1b609d0"
+
+    ap-northeast-1-2.5.5 = "ami-04b3aa6a"
+    ap-northeast-2-2.5.5 = "ami-6b25ed05"
+    ap-southeast-1-2.5.5 = "ami-bb64b0d8"
+    ap-southeast-2-2.5.5 = "ami-2bfbd648"
+    eu-central-1-2.5.5   = "ami-7f7e9d10"
+    eu-west-1-2.5.5      = "ami-03f57b70"
+    sa-east-1-2.5.5      = "ami-5c37b930"
+    us-east-1-2.5.5      = "ami-17b2a87d"
+    us-west-1-2.5.5      = "ami-ff5d239f"
+    us-west-2-2.5.5      = "ami-cfef1faf"
+    us-gov-west-1-2.5.5  = "ami-6bb7080a"
+
     ap-northeast-1-2.5.4 = "ami-daecfab4"
     ap-northeast-2-2.5.4 = "ami-05fb326b"
     ap-southeast-1-2.5.4 = "ami-64458f07"
@@ -66,6 +92,7 @@ variable "ami_map" {
     us-west-1-2.5.4      = "ami-96fb86f6"
     us-west-2-2.5.4      = "ami-c57a90a5"
     us-gov-west-1-2.5.4  = "ami-13219d72"
+
     ap-northeast-1-2.5.3 = "ami-71edfa1f"
     ap-northeast-2-2.5.3 = "ami-c8c50ca6"
     ap-southeast-1-2.5.3 = "ami-8419d3e7"
@@ -77,6 +104,7 @@ variable "ami_map" {
     us-west-1-2.5.3      = "ami-6a403d0a"
     us-west-2-2.5.3      = "ami-93ea00f3"
     us-gov-west-1-2.5.3  = "ami-d43b87b5"
+
     ap-northeast-1-2.5.2 = "ami-4fe8e021"
     ap-northeast-2-2.5.2 = "ami-7c804912"
     ap-southeast-1-2.5.2 = "ami-b7d912d4"
@@ -88,6 +116,7 @@ variable "ami_map" {
     us-west-1-2.5.2      = "ami-5e3d4f3e"
     us-west-2-2.5.2      = "ami-feb25b9e"
     us-gov-west-1-2.5.2  = "ami-a866dac9"
+
     ap-northeast-1-2.5.1 = "ami-eb5d5e85"
     ap-northeast-2-2.5.1 = "-1"
     ap-southeast-1-2.5.1 = "ami-7f00c91c"
@@ -99,6 +128,7 @@ variable "ami_map" {
     us-west-1-2.5.1      = "ami-63245403"
     us-west-2-2.5.1      = "ami-7828ca18"
     us-gov-west-1-2.5.1  = "ami-8ba71bea"
+
     ap-northeast-1-2.5.0 = "ami-43292d2d"
     ap-northeast-2-2.5.0 = "-1"
     ap-southeast-1-2.5.0 = "ami-bee729dd"
@@ -127,6 +157,10 @@ variable "allowed_commit_cidrs" {
   description = "List of CIDRs to allow commit access from"
   default = "0.0.0.0/0"
 }
+variable "chef_env" {
+  description = "Chef environment to join on provisioning"
+  default     = "_default"
+}
 variable "chef_fqdn" {
   description = "Fully qualified DNS address of the Chef Server"
 }
@@ -152,7 +186,7 @@ variable "ghe_settings" {
 }
 variable "ghe_version" {
   description = "GitHub Enterprise version (https://enterprise.github.com/releases)"
-  default = "2.6.1"
+  default = "2.6.2"
 }
 variable "hostname" {
   description = "Basename for AWS Name tag of CHEF Server"
