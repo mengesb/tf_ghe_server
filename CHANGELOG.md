@@ -3,6 +3,14 @@ tf_ghe_server CHANGELOG
 
 This file is used to list changes made in each version of the tf_ghe_server Terraform plan.
 
+v1.1.4 (2016-05-19)
+-------------------
+- [Brian Menges] - Update `ami_map` for [GitHub Enterprise v2.6.2](https://enterprise.github.com/releases/2.6.2/notes)
+- [Brian Menges] - Update `ami_map` for [GitHub Enterprise v2.5.5](https://enterprise.github.com/releases/2.5.5/notes)
+- [Brian Menges] - Change default `ghe_version` to `2.6.2`
+- [Brian Menges] - Added spacing in `ami_map` to discern GHE versions easier
+- [Brian Menges] - New varialbe `chef_env` for the Chef environment to provision against. Default: `_default`
+
 v1.1.3 (2016-05-03)
 -------------------
 - [Brian Menges] - Update `ami_map` for [GitHub Enterprise v2.6.1](https://enterprise.github.com/releases/2.6.1/notes)
