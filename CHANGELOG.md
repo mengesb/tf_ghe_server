@@ -3,6 +3,14 @@ tf_ghe_server CHANGELOG
 
 This file is used to list changes made in each version of the tf_ghe_server Terraform plan.
 
+v1.1.5 (2016-05-31)
+-------------------
+- [Brian Menges] - Update `ami_map` for [GitHub Enterprise v2.6.3](https://enterprise.github.com/releases/2.6.3/notes)
+- [Brian Menges] - Update `ami_map` for [GitHub Enterprise v2.5.8](https://enterprise.github.com/releases/2.5.8/notes)
+- [Brian Menges] - Update `ami_map` for [GitHub Enterprise v2.5.7](https://enterprise.github.com/releases/2.5.7/notes)
+- [Brian Menges] - Update `ami_map` for [GitHub Enterprise v2.5.6](https://enterprise.github.com/releases/2.5.6/notes)
+- [Brian Menges] - Change default `ghe_version` to `2.6.3`
+
 v1.1.4 (2016-05-19)
 -------------------
 - [Brian Menges] - Update `ami_map` for [GitHub Enterprise v2.6.2](https://enterprise.github.com/releases/2.6.2/notes)
