@@ -7,7 +7,8 @@ Terraform GitHub Enterprise plan
   * AWS (duh!)
   * AWS subnet id
   * AWS VPC id
-  * SSL certificate/key for created instance
+  * GitHub Enterprise license
+  * GitHub Enterprise JSON configuration dump file
   * Terraform >= 0.6.14
   * Chef Server >= 12.x
 * Uses a public IP and public DNS
@@ -104,12 +105,10 @@ ami_map.<aws_region>-<ghe_version> = "value"
 
 Variable `ghe_version` should be one of the following:
 
-* 2.6.0 (default)
-* 2.5.4
-* 2.5.3
-* 2.5.2
-* 2.5.1
-* 2.5.0
+* 2.6.x (default; 2.6.0 - current)
+* 2.5.x (2.5.0 - 2.5.8)
+
+Please refer to the [GitHub Enterprise Releases](https://enterprise.github.com/releases/) page for a list of current releases
 
 Variable `aws_region` should be one of the following:
 
