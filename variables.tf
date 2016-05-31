@@ -33,6 +33,18 @@ variable "aws_vpc_id" {
 variable "ami_map" {
   description = "AMI mapping for GHE 2.x.y installation based on AWS region"
   default = {
+    ap-northeast-1-2.6.3 = "ami-b83ed2d9"
+    ap-northeast-2-2.6.3 = "ami-b3c60ddd"
+    ap-southeast-1-2.6.3 = "ami-3966b75a"
+    ap-southeast-2-2.6.3 = "ami-df0729bc"
+    eu-central-1-2.6.3   = "ami-557b943a"
+    eu-west-1-2.6.3      = "ami-d4f063a7"
+    sa-east-1-2.6.3      = "ami-7eba3112"
+    us-east-1-2.6.3      = "ami-595daf34"
+    us-west-1-2.6.3      = "ami-c5d9a2a5"
+    us-west-2-2.6.3      = "ami-7754ad17"
+    us-gov-west-1-2.6.3  = "ami-e71fa086"
+
     ap-northeast-1-2.6.2 = "ami-2529c844"
     ap-northeast-2-2.6.2 = "ami-d0854ebe"
     ap-southeast-1-2.6.2 = "ami-7955831a"
@@ -68,6 +80,42 @@ variable "ami_map" {
     us-west-1-2.6.0      = "ami-085f2168"
     us-west-2-2.6.0      = "ami-d3d525b3"
     us-gov-west-1-2.6.0  = "ami-b1b609d0"
+
+    ap-northeast-1-2.5.8 = "ami-3939d558"
+    ap-northeast-2-2.5.8 = "ami-6cdb1002"
+    ap-southeast-1-2.5.8 = "ami-8166b7e2"
+    ap-southeast-2-2.5.8 = "ami-b1022cd2"
+    eu-central-1-2.5.8   = "ami-4a7b9425"
+    eu-west-1-2.5.8      = "ami-aaf360d9"
+    sa-east-1-2.5.8      = "ami-a7b833cb"
+    us-east-1-2.5.8      = "ami-b75fadda"
+    us-west-1-2.5.8      = "ami-49dfa429"
+    us-west-2-2.5.8      = "ami-2c52ab4c"
+    us-gov-west-1-2.5.8  = "ami-2f1ba44e"
+
+    ap-northeast-1-2.5.7 = "ami-8225c4e3"
+    ap-northeast-2-2.5.7 = "ami-ae874cc0"
+    ap-southeast-1-2.5.7 = "ami-f857819b"
+    ap-southeast-2-2.5.7 = "ami-ba341bd9"
+    eu-central-1-2.5.7   = "ami-70e30f1f"
+    eu-west-1-2.5.7      = "ami-6d15811e"
+    sa-east-1-2.5.7      = "ami-0257df6e"
+    us-east-1-2.5.7      = "ami-25a74c48"
+    us-west-1-2.5.7      = "ami-a8423ac8"
+    us-west-2-2.5.7      = "ami-5cb9463c"
+    us-gov-west-1-2.5.7  = "ami-d44df2b5"
+
+    ap-northeast-1-2.5.6 = "ami-adbea4c3"
+    ap-northeast-2-2.5.6 = "ami-c84e86a6"
+    ap-southeast-1-2.5.6 = "ami-303dea53"
+    ap-southeast-2-2.5.6 = "ami-b53814d6"
+    eu-central-1-2.5.6   = "ami-917193fe"
+    eu-west-1-2.5.6      = "ami-7161e902"
+    sa-east-1-2.5.6      = "ami-da4dc4b6"
+    us-east-1-2.5.6      = "ami-cecb2ba3"
+    us-west-1-2.5.6      = "ami-b5136ad5"
+    us-west-2-2.5.6      = "ami-9a897bfa"
+    us-gov-west-1-2.5.6  = "ami-659b2404"
 
     ap-northeast-1-2.5.5 = "ami-04b3aa6a"
     ap-northeast-2-2.5.5 = "ami-6b25ed05"
@@ -186,7 +234,7 @@ variable "ghe_settings" {
 }
 variable "ghe_version" {
   description = "GitHub Enterprise version (https://enterprise.github.com/releases)"
-  default = "2.6.2"
+  default = "2.6.3"
 }
 variable "hostname" {
   description = "Basename for AWS Name tag of CHEF Server"
