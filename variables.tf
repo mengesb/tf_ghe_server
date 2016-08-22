@@ -16,7 +16,7 @@ variable "aws_private_key_file" {
 }
 variable "aws_region" {
   description = "AWS Region to deploy to"
-  default     = "us-west-1"
+  default     = "us-west-2"
 }
 variable "aws_secret_key" {
   description = "Your AWS secret (ex. $AWS_SECRET_ACCESS_KEY)"
@@ -205,23 +205,6 @@ variable "allowed_commit_cidrs" {
   description = "List of CIDRs to allow commit access from"
   default = "0.0.0.0/0"
 }
-variable "chef_env" {
-  description = "Chef environment to join on provisioning"
-  default     = "_default"
-}
-variable "chef_fqdn" {
-  description = "Fully qualified DNS address of the Chef Server"
-}
-variable "chef_org" {
-  description = "Chef Server organization short name (lowercase alphanumeric characters only)"
-}
-variable "chef_org_validator" {
-  descirption = "Path to validation pem for ${var.chef_org}"
-}
-variable "client_version" {
-  description = "Version of the chef-client software to install"
-  default     = "12.8.1"
-}
 variable "domain" {
   description = "Domain name of the server created"
   default = "localdomain"
@@ -240,10 +223,6 @@ variable "hostname" {
   description = "Basename for AWS Name tag of CHEF Server"
   default = "github"
 }
-variable "knife_rb" {
-  description = "Path to your knife.rb configuration"
-  default     = ".chef/knife.rb"
-}
 variable "log_to_file" {
   description = "Output chef-client runtime to logfiles/"
   default     = true
@@ -258,11 +237,15 @@ variable "root_delete_termination" {
 }
 variable "root_volume_size" {
   description = "Size in GB of root device"
-  default     = 60
+  default     = 80
 }
 variable "root_volume_type" {
   description = "Type of root volume"
   default     = "standard"
+}
+variable "data_volume_size" {
+  description = "Size in GB of data device"
+  default = 200
 }
 variable "server_count" {
   description = "Number of CHEF Servers to provision. DO NOT CHANGE!"
@@ -287,5 +270,13 @@ variable "tag_description" {
 variable "wait_on" {
   description = "Variable to hold outputs of other moudles to force waiting"
   default     = "Nothing"
+}
+variable "dns_zone_id" {
+  description = "Route53 zone id for the DNS zone"
+  default = "Z3F1EC8Q22733N"
+}
+variable "dns_name" {
+  description = "User-friendly DNS name for GitHub instance"
+  default = "git.devops.xogrp.com"
 }
 

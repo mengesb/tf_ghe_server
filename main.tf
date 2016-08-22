@@ -126,8 +126,6 @@ provider "aws" {
 resource "template_file" "attributes-json" {
   template    = "${file("${path.module}/files/attributes-json.tpl")}"
   vars {
-    chef_fqdn = "${var.chef_fqdn}"
-    chef_org  = "${var.chef_org}"
     host      = "${var.hostname}"
     domain    = "${var.domain}"
   }
@@ -165,7 +163,7 @@ resource "aws_instance" "ghe-server" {
   ebs_block_device {
     device_name = "/dev/xvdg"
     volume_type = "gp2"
-    volume_size = 10
+    volume_size = "${var.data_volume_size}"
     delete_on_termination = true
     encrypted = true
   }
@@ -181,36 +179,7 @@ resource "aws_instance" "ghe-server" {
       "mkdir -p ~/.ghe"
     ]
   }
-  # Ensure previous invocations are dead to us
-  provisioner "local-exec" {
-    command = "knife node-delete   ${var.hostname}.${var.domain} -y -c ${var.knife_rb} ; echo OK"
-  }
-  provisioner "local-exec" {
-    command = "knife client-delete ${var.hostname}.${var.domain} -y -c ${var.knife_rb} ; echo OK"
-  }
-  # Provision with Chef
-  provisioner "chef" {
-    attributes_json = "${template_file.attributes-json.rendered}"
-    environment     = "${var.chef_env}"
-    run_list        = ["system::default","recipe[chef-client::default]","recipe[chef-client::config]","recipe[chef-client::cron]","recipe[chef-client::delete_validation]"]
-    log_to_file     = "${var.log_to_file}"
-    node_name       = "${var.hostname}.${var.domain}"
-    server_url      = "https://${var.chef_fqdn}/organizations/${var.chef_org}"
-    validation_client_name = "${var.chef_org}-validator"
-    validation_key  = "${file("${var.chef_org_validator}")}"
-    version         = "${var.client_version}"
-  }
-  # Hostname issues... rebooting
-  provisioner "remote-exec" {
-    inline = [
-      "sudo reboot"
-    ]
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "sleep 10 && echo 'ready'"
-    ]
-  }
+  
 }
 resource "template_file" "ghe-server-creds" {
   template = "${file("${path.module}/files/ghe-server-creds.tpl")}"
@@ -235,3 +204,11 @@ resource "null_resource" "ghe-configure" {
   }
 }
 
+resource "aws_route53_record" "github-enterprise" {
+  zone_id = "${var.dns_zone_id}"
+  name    = "${var.dns_name}"
+  type    = "A"
+  ttl     = "300"
+  records = [ "${aws_instance.ghe-server.public_ip}" ]
+  depends_on = ["aws_instance.ghe-server"]
+}
