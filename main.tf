@@ -131,18 +131,9 @@ resource "template_file" "attributes-json" {
   }
 }
 #
-# Wait on
-#
-resource "null_resource" "wait_on" {
-  provisioner "local-exec" {
-    command = "echo Waited on ${var.wait_on} before proceeding"
-  }
-}
-#
 # Provision server
 #
 resource "aws_instance" "ghe-server" {
-  depends_on = ["null_resource.wait_on"]
   ami = "${lookup(var.ami_map, "${var.aws_region}-${var.ghe_version}")}"
   count = "${var.server_count}"
   instance_type = "${var.aws_flavor}"
@@ -151,7 +142,7 @@ resource "aws_instance" "ghe-server" {
   vpc_security_group_ids = ["${aws_security_group.ghe-server.id}"]
   key_name = "${var.aws_key_name}"
   tags = {
-    Name = "${var.hostname}.${var.domain}"
+    Name = "${var.dns_name}"
       Description = "${var.tag_description}"
   }
   root_block_device = {

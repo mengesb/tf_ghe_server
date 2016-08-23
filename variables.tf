@@ -16,7 +16,7 @@ variable "aws_private_key_file" {
 }
 variable "aws_region" {
   description = "AWS Region to deploy to"
-  default     = "us-west-2"
+  default     = "us-east-1"
 }
 variable "aws_secret_key" {
   description = "Your AWS secret (ex. $AWS_SECRET_ACCESS_KEY)"
@@ -217,7 +217,7 @@ variable "ghe_settings" {
 }
 variable "ghe_version" {
   description = "GitHub Enterprise version (https://enterprise.github.com/releases)"
-  default = "2.6.3"
+  default = "2.5.1"
 }
 variable "hostname" {
   description = "Basename for AWS Name tag of CHEF Server"
@@ -265,11 +265,7 @@ variable "sgrule_snmp" {
 }
 variable "tag_description" {
   description = "AWS description tag text"
-  default     = "Created using Terraform (tf_chef_server)"
-}
-variable "wait_on" {
-  description = "Variable to hold outputs of other moudles to force waiting"
-  default     = "Nothing"
+  default     = "GitHub Enterprise created using Terraform"
 }
 variable "dns_zone_id" {
   description = "Route53 zone id for the DNS zone"
