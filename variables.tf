@@ -269,10 +269,8 @@ variable "tag_description" {
 }
 variable "dns_zone_id" {
   description = "Route53 zone id for the DNS zone"
-  default = "Z3F1EC8Q22733N"
 }
 variable "dns_name" {
   description = "User-friendly DNS name for GitHub instance"
-  default = "git.devops.xogrp.com"
 }
 
