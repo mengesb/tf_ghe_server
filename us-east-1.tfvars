@@ -1,0 +1,8 @@
+aws_flavor = "r3.large"
+aws_key_name = "github-enterprise"
+aws_region = "us-east-1"
+ghe_version = "2.5.1"
+ghe_license = "enterprise-trial.ghl"
+ghe_settings = "enterprise-trial.json"
+dns_zone_id = "Z3651YA2BWMOR9"
+dns_name = "git-us-east-1.eng.xogrp.com"

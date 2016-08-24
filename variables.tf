@@ -16,7 +16,7 @@ variable "aws_private_key_file" {
 }
 variable "aws_region" {
   description = "AWS Region to deploy to"
-  default     = "us-west-1"
+  default     = "us-east-1"
 }
 variable "aws_secret_key" {
   description = "Your AWS secret (ex. $AWS_SECRET_ACCESS_KEY)"
@@ -190,6 +190,7 @@ variable "ami_map" {
     us-gov-west-1-2.5.0  = "ami-04e15d65"
   }
 }
+
 variable "ami_user" {
   description = "AWS AMI default username"
   default = "admin"
@@ -205,23 +206,6 @@ variable "allowed_commit_cidrs" {
   description = "List of CIDRs to allow commit access from"
   default = "0.0.0.0/0"
 }
-variable "chef_env" {
-  description = "Chef environment to join on provisioning"
-  default     = "_default"
-}
-variable "chef_fqdn" {
-  description = "Fully qualified DNS address of the Chef Server"
-}
-variable "chef_org" {
-  description = "Chef Server organization short name (lowercase alphanumeric characters only)"
-}
-variable "chef_org_validator" {
-  descirption = "Path to validation pem for ${var.chef_org}"
-}
-variable "client_version" {
-  description = "Version of the chef-client software to install"
-  default     = "12.8.1"
-}
 variable "domain" {
   description = "Domain name of the server created"
   default = "localdomain"
@@ -234,15 +218,11 @@ variable "ghe_settings" {
 }
 variable "ghe_version" {
   description = "GitHub Enterprise version (https://enterprise.github.com/releases)"
-  default = "2.6.3"
+  default = "2.5.1"
 }
 variable "hostname" {
-  description = "Basename for AWS Name tag of CHEF Server"
+  description = "Basename for AWS Name tag of GitHub Enterprise"
   default = "github"
-}
-variable "knife_rb" {
-  description = "Path to your knife.rb configuration"
-  default     = ".chef/knife.rb"
 }
 variable "log_to_file" {
   description = "Output chef-client runtime to logfiles/"
@@ -258,14 +238,18 @@ variable "root_delete_termination" {
 }
 variable "root_volume_size" {
   description = "Size in GB of root device"
-  default     = 60
+  default     = 80
 }
 variable "root_volume_type" {
   description = "Type of root volume"
   default     = "standard"
 }
+variable "data_volume_size" {
+  description = "Size in GB of data device"
+  default = 200
+}
 variable "server_count" {
-  description = "Number of CHEF Servers to provision. DO NOT CHANGE!"
+  description = "Number of GitHub Enterprise servers to provision"
   default = 1
 }
 variable "sgrule_ntp" {
@@ -282,10 +266,23 @@ variable "sgrule_snmp" {
 }
 variable "tag_description" {
   description = "AWS description tag text"
-  default     = "Created using Terraform (tf_chef_server)"
+  default     = "GitHub Enterprise created using Terraform"
 }
-variable "wait_on" {
-  description = "Variable to hold outputs of other moudles to force waiting"
-  default     = "Nothing"
+variable "tag_role" {
+  description = "AWS role tag text"
+  default = "Source Control"
 }
-
+variable "tag_application" {
+  description = "AWS application tag text"
+  default = "GitHub Enterprise"
+}
+variable "tag_team" {
+  description = "AWS team tag text"
+  default = "Engineering Productivity"
+}
+variable "dns_zone_id" {
+  description = "Route53 zone id for the DNS zone"
+}
+variable "dns_name" {
+  description = "User-friendly DNS name for GitHub instance"
+}
