@@ -1,3 +1,15 @@
+provider "aws" {
+  access_key = "${var.aws_access_key}"
+  secret_key = "${var.aws_secret_key}"
+  region = "${var.aws_region}"
+}
+
+# EIP required since NetScaler rule must allow admin ssh access to backup server
+resource "aws_eip" "backup-server-ip" {
+  instance = "${aws_instance.ghe-backup-server.id}"
+  vpc = true
+}
+
 # GHE Backup Utilities Server security group
 resource "aws_security_group" "ghe-backup-server" {
   name = "${var.dns_name} sg"

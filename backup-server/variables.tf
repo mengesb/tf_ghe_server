@@ -6,7 +6,7 @@ variable "aws_access_key" {
 }
 variable "aws_flavor" {
   description = "AWS Instance type to deploy"
-  default     = "r3.large"
+  default     = "c4.large"
 }
 variable "aws_key_name" {
   description = "Name of the key pair uploaded to AWS"
@@ -46,7 +46,7 @@ variable "backup_ami_map" {
 }
 variable "ami_user" {
   description = "AWS AMI default username"
-  default = "admin"
+  default = "ubuntu"
 }
 #
 # specific configs
@@ -58,10 +58,6 @@ variable "allowed_cidrs" {
 variable "allowed_commit_cidrs" {
   description = "List of CIDRs to allow commit access from"
   default = "0.0.0.0/0"
-}
-variable "domain" {
-  description = "Domain name of the server created"
-  default = "localdomain"
 }
 variable "hostname" {
   description = "Basename for AWS Name tag of GitHub backup server"
@@ -94,18 +90,6 @@ variable "data_volume_size" {
 variable "server_count" {
   description = "Number of GitHub backup servers to provision"
   default = 1
-}
-variable "sgrule_ntp" {
-  description = "Boolean: Allow NTP server security group rule"
-  default     = 0
-}
-variable "sgrule_smtp" {
-  description = "Boolean: Allow SMTP server security group rule"
-  default     = 0
-}
-variable "sgrule_snmp" {
-  description = "Boolean: Allow SNMP server security group rule"
-  default     = 0
 }
 variable "tag_description" {
   description = "AWS description tag text"
