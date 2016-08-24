@@ -1,0 +1,5 @@
+aws_flavor = "c4.large"
+aws_key_name = "github-backup"
+aws_region = "us-west-2"
+dns_zone_id = "Z3651YA2BWMOR9"
+dns_name = "github-backup.eng.xogrp.com"
