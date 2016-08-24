@@ -1,3 +1,9 @@
+# EIP required since NetScaler rule must allow admin ssh access for replication
+resource "aws_eip" "ghe-server-ip" {
+  instance = "${aws_instance.ghe-server.id}"
+  vpc = true
+}
+
 # GHE Server security group - https://help.github.com/enterprise/2.5/admin/guides/installation/network-ports-to-open/
 resource "aws_security_group" "ghe-server" {
   name = "${var.dns_name} sg"
@@ -151,6 +157,7 @@ resource "aws_instance" "ghe-server" {
     Role = "${var.tag_role}"
     Team = "${var.tag_team}"
     Application = "${var.tag_application}"
+    Environment = "${var.tag_environment}"
   }
   root_block_device = {
     delete_on_termination = "${var.root_delete_termination}"
@@ -187,7 +194,7 @@ resource "template_file" "ghe-server-creds" {
   }
 }
 resource "null_resource" "ghe-configure" {
-  depends_on = ["aws_instance.ghe-server"]
+  depends_on = ["aws_eip.ghe-server-ip","aws_instance.ghe-server"]
   # Use the API to setup the rest from JSON file
   provisioner "local-exec" {
     command = "sleep 5 && curl -kLs --resolve ${aws_instance.ghe-server.tags.Name}:8443:${aws_instance.ghe-server.public_ip} -X POST 'https://${aws_instance.ghe-server.tags.Name}:8443/setup/api/start' -F license=@${var.ghe_license} -F 'password=${base64sha256(aws_instance.ghe-server.id)}' -F 'settings=<${var.ghe_settings}'"
@@ -208,5 +215,5 @@ resource "aws_route53_record" "github-enterprise" {
   type    = "A"
   ttl     = "300"
   records = [ "${aws_instance.ghe-server.public_ip}" ]
-  depends_on = ["aws_instance.ghe-server"]
+  depends_on = ["aws_eip.ghe-server-ip","aws_instance.ghe-server"]
 }

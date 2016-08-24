@@ -107,6 +107,10 @@ variable "tag_team" {
   description = "AWS team tag text"
   default = "Engineering Productivity"
 }
+variable "tag_environment" {
+  description = "AWS environment tag text"
+  default = "Production"
+}
 variable "dns_zone_id" {
   description = "Route53 zone id for the DNS zone"
 }
