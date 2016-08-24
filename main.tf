@@ -1,10 +1,14 @@
 # GHE Server security group - https://help.github.com/enterprise/2.5/admin/guides/installation/network-ports-to-open/
 resource "aws_security_group" "ghe-server" {
-  name = "${var.hostname}.${var.domain} sg"
+  name = "${var.dns_name} sg"
   description = "GitHub Enterprise"
   vpc_id = "${var.aws_vpc_id}"
   tags = {
-    Name = "${var.hostname}.${var.domain} sg"
+    Name = "${var.dns_name} sg"
+    Description = "${var.tag_description}"
+    Role = "${var.tag_role}"
+    Team = "${var.tag_team}"
+    Application = "${var.tag_application}"
   }
 }
 # SSH - for git
@@ -143,7 +147,10 @@ resource "aws_instance" "ghe-server" {
   key_name = "${var.aws_key_name}"
   tags = {
     Name = "${var.dns_name}"
-      Description = "${var.tag_description}"
+    Description = "${var.tag_description}"
+    Role = "${var.tag_role}"
+    Team = "${var.tag_team}"
+    Application = "${var.tag_application}"
   }
   root_block_device = {
     delete_on_termination = "${var.root_delete_termination}"

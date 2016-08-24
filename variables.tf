@@ -190,6 +190,7 @@ variable "ami_map" {
     us-gov-west-1-2.5.0  = "ami-04e15d65"
   }
 }
+
 variable "ami_user" {
   description = "AWS AMI default username"
   default = "admin"
@@ -220,7 +221,7 @@ variable "ghe_version" {
   default = "2.5.1"
 }
 variable "hostname" {
-  description = "Basename for AWS Name tag of CHEF Server"
+  description = "Basename for AWS Name tag of GitHub Enterprise"
   default = "github"
 }
 variable "log_to_file" {
@@ -248,7 +249,7 @@ variable "data_volume_size" {
   default = 200
 }
 variable "server_count" {
-  description = "Number of CHEF Servers to provision. DO NOT CHANGE!"
+  description = "Number of GitHub Enterprise servers to provision"
   default = 1
 }
 variable "sgrule_ntp" {
@@ -267,10 +268,21 @@ variable "tag_description" {
   description = "AWS description tag text"
   default     = "GitHub Enterprise created using Terraform"
 }
+variable "tag_role" {
+  description = "AWS role tag text"
+  default = "Source Control"
+}
+variable "tag_application" {
+  description = "AWS application tag text"
+  default = "GitHub Enterprise"
+}
+variable "tag_team" {
+  description = "AWS team tag text"
+  default = "Engineering Productivity"
+}
 variable "dns_zone_id" {
   description = "Route53 zone id for the DNS zone"
 }
 variable "dns_name" {
   description = "User-friendly DNS name for GitHub instance"
 }
-
