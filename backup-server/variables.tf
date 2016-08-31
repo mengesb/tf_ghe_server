@@ -51,13 +51,9 @@ variable "ami_user" {
 #
 # specific configs
 #
-variable "allowed_cidrs" {
-  description = "List of CIDRs to allow access from"
-  default = "0.0.0.0/0"
-}
-variable "allowed_commit_cidrs" {
-  description = "List of CIDRs to allow commit access from"
-  default = "0.0.0.0/0"
+variable "allowed_admin_cidrs" {
+  description = "List of CIDRs to allow admin access from"
+  default = "199.85.96.0/23,66.194.13.160/27,50.58.125.128/25,168.215.186.224/27,152.101.38.249/32,113.108.131.227/32,50.19.204.37/32"
 }
 variable "hostname" {
   description = "Basename for AWS Name tag of GitHub backup server"

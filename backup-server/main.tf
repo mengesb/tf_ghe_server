@@ -29,7 +29,7 @@ resource "aws_security_group_rule" "ghe-backup-server_allow_22_tcp" {
   from_port = 22
   to_port = 22
   protocol = "tcp"
-  cidr_blocks = ["${split(",", var.allowed_commit_cidrs)}"]
+  cidr_blocks = ["${split(",", var.allowed_admin_cidrs)}"]
   security_group_id = "${aws_security_group.ghe-backup-server.id}"
 }
 
