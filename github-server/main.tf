@@ -32,7 +32,7 @@ resource "aws_security_group_rule" "ghe-server_allow_122_tcp" {
   from_port = 122
   to_port = 122
   protocol = "tcp"
-  cidr_blocks = ["${split(",", var.allowed_cidrs)}"]
+  cidr_blocks = ["${split(",", var.allowed_admin_cidrs)}"]
   security_group_id = "${aws_security_group.ghe-server.id}"
 }
 # HTTP
@@ -41,7 +41,7 @@ resource "aws_security_group_rule" "ghe-server_allow_80_tcp" {
   from_port = 80
   to_port = 80
   protocol = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
+  cidr_blocks = ["${split(",", var.allowed_cidrs)}"]
   security_group_id = "${aws_security_group.ghe-server.id}"
 }
 # HTTP @ 8080
@@ -50,7 +50,7 @@ resource "aws_security_group_rule" "ghe-server_allow_8080_tcp" {
   from_port = 8080
   to_port = 8080
   protocol = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
+  cidr_blocks = ["${split(",", var.allowed_cidrs)}"]
   security_group_id = "${aws_security_group.ghe-server.id}"
 }
 # HTTPS
@@ -59,7 +59,7 @@ resource "aws_security_group_rule" "ghe-server_allow_443_tcp" {
   from_port = 443
   to_port = 443
   protocol = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
+  cidr_blocks = ["${split(",", var.allowed_cidrs)}"]
   security_group_id = "${aws_security_group.ghe-server.id}"
 }
 # HTTPS @ 8443
@@ -68,7 +68,7 @@ resource "aws_security_group_rule" "ghe-server_allow_8443_tcp" {
   from_port = 8443
   to_port = 8443
   protocol = "tcp"
-  cidr_blocks = ["${split(",", var.allowed_cidrs)}"]
+  cidr_blocks = ["${split(",", var.allowed_admin_cidrs)}"]
   security_group_id = "${aws_security_group.ghe-server.id}"
 }
 # GIT
@@ -77,7 +77,7 @@ resource "aws_security_group_rule" "ghe-server_allow_9418_tcp" {
   from_port = 9418
   to_port = 9418
   protocol = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
+  cidr_blocks = ["${split(",", var.allowed_cidrs)}"]
   security_group_id = "${aws_security_group.ghe-server.id}"
 }
 # VPN
@@ -86,7 +86,7 @@ resource "aws_security_group_rule" "ghe-server_allow_1194_udp" {
   from_port = 1194
   to_port = 1194
   protocol = "udp"
-  cidr_blocks = ["0.0.0.0/0"]
+  cidr_blocks = ["${split(",", var.allowed_cidrs)}"]
   security_group_id = "${aws_security_group.ghe-server.id}"
 }
 ## NTP
@@ -96,7 +96,7 @@ resource "aws_security_group_rule" "ghe-server_allow_123_udp" {
   from_port = 123
   to_port = 123
   protocol = "udp"
-  cidr_blocks = ["0.0.0.0/0"]
+  cidr_blocks = ["${split(",", var.allowed_cidrs)}"]
   security_group_id = "${aws_security_group.ghe-server.id}"
 }
 # SNMP
@@ -116,7 +116,7 @@ resource "aws_security_group_rule" "ghe-server_allow_25_tcp" {
   from_port = 25
   to_port = 25
   protocol = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
+  cidr_blocks = ["${split(",", var.allowed_cidrs)}"]
   security_group_id = "${aws_security_group.ghe-server.id}"
 }
 # Egress: ALL
