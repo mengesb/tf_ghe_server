@@ -1,3 +1,48 @@
+resource "aws_iam_instance_profile" "github_instance_profile" {
+  name = "github_instance_profile"
+  roles = ["${aws_iam_role.github_base.name}"]
+}
+
+resource "aws_iam_role" "github_base" {
+  name = "github_base"
+  assume_role_policy = <<-EOF
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Action": "sts:AssumeRole",
+              "Principal": {"Service": "ec2.amazonaws.com"},
+              "Effect": "Allow",
+              "Sid": "AllowAssumeRole"
+          }
+      ]
+  }
+  EOF
+}
+
+resource "aws_iam_role_policy" "github_role_policy" {
+  name = "github_role_policy"
+  role = "${aws_iam_role.github_base.id}"
+  policy = <<-EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
+      "Resource": "${aws_iam_role.github_base.arn}"
+    }
+    ]
+  }
+  EOF
+}
+
+resource "aws_iam_policy_attachment" "iam_ecr_attach" {
+  name = "iam_ecr_attach"
+  roles = ["${aws_iam_role.github_base.name}"]
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchFullAccess"
+}
+
 # EIP required since NetScaler rule must allow admin ssh access for replication
 resource "aws_eip" "ghe-server-ip" {
   instance = "${aws_instance.ghe-server.id}"
@@ -151,6 +196,8 @@ resource "aws_instance" "ghe-server" {
   subnet_id = "${var.aws_subnet_id}"
   vpc_security_group_ids = ["${aws_security_group.ghe-server.id}"]
   key_name = "${var.aws_key_name}"
+  user_data = "${file("userdata.sh")}"
+  iam_instance_profile = "github_instance_profile"
   tags = {
     Name = "${var.dns_name}"
     Description = "${var.tag_description}"
@@ -194,7 +241,6 @@ resource "template_file" "ghe-server-creds" {
   }
 }
 resource "null_resource" "ghe-configure" {
-  depends_on = ["aws_eip.ghe-server-ip","aws_instance.ghe-server"]
   # Use the API to setup the rest from JSON file
   provisioner "local-exec" {
     command = "sleep 5 && curl -kLs --resolve ${aws_instance.ghe-server.tags.Name}:8443:${aws_instance.ghe-server.public_ip} -X POST 'https://${aws_instance.ghe-server.tags.Name}:8443/setup/api/start' -F license=@${var.ghe_license} -F 'password=${base64sha256(aws_instance.ghe-server.id)}' -F 'settings=<${var.ghe_settings}'"
@@ -214,6 +260,5 @@ resource "aws_route53_record" "github-enterprise" {
   name    = "${var.dns_name}"
   type    = "A"
   ttl     = "300"
-  records = [ "${aws_instance.ghe-server.public_ip}" ]
-  depends_on = ["aws_eip.ghe-server-ip","aws_instance.ghe-server"]
+  records = [ "${aws_eip.ghe-server-ip.public_ip}" ]
 }

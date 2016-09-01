@@ -33,6 +33,18 @@ variable "aws_vpc_id" {
 variable "ami_map" {
   description = "AMI mapping for GHE 2.x.y installation based on AWS region"
   default = {
+    ap-northeast-1-2.7.3 = "ami-9500c8f4"
+    ap-northeast-2-2.7.3 = "ami-6bc21705"
+    ap-southeast-1-2.7.3 = "ami-596ab23a"
+    ap-southeast-2-2.7.3 = "ami-05122466"
+    eu-central-1-2.7.3   = "ami-b97f8fd6"
+    eu-west-1-2.7.3      = "ami-06166575"
+    sa-east-1-2.7.3      = "ami-3763f25b"
+    us-east-1-2.7.3      = "ami-35d8b722"
+    us-west-1-2.7.3      = "ami-ba9ad7da"
+    us-west-2-2.7.3      = "ami-5316c033"
+    us-gov-west-1-2.7.3  = "ami-6db40d0c"
+
     ap-northeast-1-2.6.3 = "ami-b83ed2d9"
     ap-northeast-2-2.6.3 = "ami-b3c60ddd"
     ap-southeast-1-2.6.3 = "ami-3966b75a"
@@ -208,7 +220,7 @@ variable "allowed_commit_cidrs" {
 }
 variable "allowed_admin_cidrs" {
   description = "List of CIDRs to allow admin access from"
-  default = "199.85.96.0/23,66.194.13.160/27,50.58.125.128/25,168.215.186.224/27,152.101.38.249/32,113.108.131.227/32,52.89.80.75/32"
+  default = "199.85.96.0/23,66.194.13.160/27,50.58.125.128/25,168.215.186.224/27,152.101.38.249/32,113.108.131.227/32,52.89.80.75/32,74.73.187.154/32"
 }
 variable "domain" {
   description = "Domain name of the server created"
@@ -222,7 +234,7 @@ variable "ghe_settings" {
 }
 variable "ghe_version" {
   description = "GitHub Enterprise version (https://enterprise.github.com/releases)"
-  default = "2.5.1"
+  default = "2.7.3"
 }
 variable "hostname" {
   description = "Basename for AWS Name tag of GitHub Enterprise"
@@ -293,4 +305,28 @@ variable "dns_zone_id" {
 }
 variable "dns_name" {
   description = "User-friendly DNS name for GitHub instance"
+}
+variable "load_average_warning" {
+  description = "GitHub Enterprise load average threshold"
+  default = "2"
+}
+variable "load_average_critical" {
+  description = "GitHub Enterprise load average threshold"
+  default = "4"
+}
+variable "load_average_warning" {
+  description = "GitHub Enterprise load average warning threshold"
+  default = "2"
+}
+variable "load_average_critical" {
+  description = "GitHub Enterprise load average critical threshold"
+  default = "4"
+}
+variable "memory_warning" {
+  description = "GitHub Enterprise memory warning threshold"
+  default = "50"
+}
+variable "memory_critical" {
+  description = "GitHub Enterprise memory critical threshold"
+  default = "70"
 }
