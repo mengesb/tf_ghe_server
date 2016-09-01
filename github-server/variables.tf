@@ -330,3 +330,11 @@ variable "memory_critical" {
   description = "GitHub Enterprise memory critical threshold"
   default = "70"
 }
+variable "diskspace_warning" {
+  description = "GitHub Enterprise disk space warning threshold"
+  default = "70"
+}
+variable "diskspace_critical" {
+  description = "GitHub Enterprise disk space critical threshold"
+  default = "90"
+}
