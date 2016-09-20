@@ -33,6 +33,18 @@ variable "aws_vpc_id" {
 variable "ami_map" {
   description = "AMI mapping for GHE 2.x.y installation based on AWS region"
   default = {
+    ap-northeast-1-2.7.4 = "ami-8dc211ec"
+    ap-northeast-2-2.7.4 = "ami-b65386d8"
+    ap-southeast-1-2.7.4 = "ami-9aab0ef9"
+    ap-southeast-2-2.7.4 = "ami-1c2a1a7f"
+    eu-central-1-2.7.4   = "ami-b97f8fd6"
+    eu-west-1-2.7.4      = "ami-a09fe4d3"
+    sa-east-1-2.7.4      = "ami-348e1d58"
+    us-east-1-2.7.4      = "ami-3b78012c"
+    us-west-1-2.7.4      = "ami-56eda236"
+    us-west-2-2.7.4      = "ami-8961bce9"
+    us-gov-west-1-2.7.4  = "ami-215de440"
+
     ap-northeast-1-2.7.3 = "ami-9500c8f4"
     ap-northeast-2-2.7.3 = "ami-6bc21705"
     ap-southeast-1-2.7.3 = "ami-596ab23a"
