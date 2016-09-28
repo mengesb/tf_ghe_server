@@ -1,6 +1,6 @@
+engines:
+  fixme:
+    enabled: true
 ratings:
-   paths:
-   - "**.tpl"
-   - "**.sh*"
-   - "**.tf*"
-   - "**.json*"
+  paths: []
+xclude_paths: []
