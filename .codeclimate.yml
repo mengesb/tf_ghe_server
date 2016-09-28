@@ -1,0 +1,6 @@
+ratings:
+   paths:
+   - "**.tpl"
+   - "**.sh*"
+   - "**.tf*"
+   - "**.json*"
