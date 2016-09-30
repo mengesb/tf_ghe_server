@@ -54,6 +54,7 @@ resource "aws_instance" "ghe-backup-server" {
   subnet_id = "${var.aws_subnet_id}"
   vpc_security_group_ids = ["${aws_security_group.ghe-backup-server.id}"]
   key_name = "${var.aws_key_name}"
+  user_data = "${file("userdata.sh")}"
   tags = {
     Name = "${var.dns_name}"
     Description = "${var.tag_description}"
