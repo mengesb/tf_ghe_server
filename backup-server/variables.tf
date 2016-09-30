@@ -28,6 +28,38 @@ variable "aws_vpc_id" {
   description = "AWS VPC id (ex. vpc-ffffffff)"
 }
 
+variable "load_average_warning" {
+  description = "GitHub Enterprise load average threshold"
+  default = "2"
+}
+variable "load_average_critical" {
+  description = "GitHub Enterprise load average threshold"
+  default = "4"
+}
+variable "load_average_warning" {
+  description = "GitHub Enterprise load average warning threshold"
+  default = "2"
+}
+variable "load_average_critical" {
+  description = "GitHub Enterprise load average critical threshold"
+  default = "4"
+}
+variable "memory_warning" {
+  description = "GitHub Enterprise memory warning threshold"
+  default = "50"
+}
+variable "memory_critical" {
+  description = "GitHub Enterprise memory critical threshold"
+  default = "70"
+}
+variable "diskspace_warning" {
+  description = "GitHub Enterprise disk space warning threshold"
+  default = "70"
+}
+variable "diskspace_critical" {
+  description = "GitHub Enterprise disk space critical threshold"
+  default = "90"
+}
 variable "backup_ami_map" {
   description = "AMI mapping for GHE backup server based on AWS region"
   default = {
