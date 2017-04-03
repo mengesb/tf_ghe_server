@@ -1,5 +1,5 @@
 resource "aws_iam_instance_profile" "github_instance_profile" {
-  name = "github_instance_profile"
+  name = "github_instance_profile2"
   roles = ["${aws_iam_role.github_base.name}"]
 }
 
@@ -197,7 +197,7 @@ resource "aws_instance" "ghe-server" {
   vpc_security_group_ids = ["${aws_security_group.ghe-server.id}"]
   key_name = "${var.aws_key_name}"
   user_data = "${file("userdata.sh")}"
-  iam_instance_profile = "github_instance_profile"
+  iam_instance_profile = "github_instance_profile2"
   tags = {
     Name = "${var.dns_name}"
     Description = "${var.tag_description}"
@@ -222,7 +222,7 @@ resource "aws_instance" "ghe-server" {
   connection {
     host = "${self.public_ip}"
     user = "${var.ami_user}"
-    private_key = "${var.aws_private_key_file}"
+    private_key = "${file("~/Downloads/github-enterprise.pem")}"
     port = 122
   }
   # Setup directories

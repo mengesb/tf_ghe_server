@@ -33,6 +33,7 @@ variable "aws_vpc_id" {
 variable "ami_map" {
   description = "AMI mapping for GHE 2.x.y installation based on AWS region"
   default = {
+    us-east-1-2.8.7      = "ami-c3fe27d5"
     ap-northeast-1-2.7.4 = "ami-8dc211ec"
     ap-northeast-2-2.7.4 = "ami-b65386d8"
     ap-southeast-1-2.7.4 = "ami-9aab0ef9"
@@ -324,14 +325,6 @@ variable "load_average_warning" {
 }
 variable "load_average_critical" {
   description = "GitHub Enterprise load average threshold"
-  default = "4"
-}
-variable "load_average_warning" {
-  description = "GitHub Enterprise load average warning threshold"
-  default = "2"
-}
-variable "load_average_critical" {
-  description = "GitHub Enterprise load average critical threshold"
   default = "4"
 }
 variable "memory_warning" {
