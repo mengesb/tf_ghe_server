@@ -18,11 +18,25 @@ variable "aws_region" {
   description = "AWS Region to deploy to"
   default     = "us-east-1"
 }
+
+variable "primary_az" {
+  description = "availability zone where primary server is located"
+  default = "us-east-1a"
+}
+
+variable "failover_az" {
+  description = "availability zone where failover server is located"
+  default = "us-east-1d"
+}
+
 variable "aws_secret_key" {
   description = "Your AWS secret (ex. $AWS_SECRET_ACCESS_KEY)"
 }
-variable "aws_subnet_id" {
-  description = "AWS Subnet id (ex. subnet-ffffffff)"
+variable "aws_primary_subnet_id" {
+  description = "AWS Subnet id (ex. subnet-ffffffff) for primary GHE server"
+}
+variable "aws_failover_subnet_id" {
+  description = "AWS Subnet id (ex. subnet-ffffffff) for failover GHE server"
 }
 variable "aws_vpc_id" {
   description = "AWS VPC id (ex. vpc-ffffffff)"
@@ -33,6 +47,7 @@ variable "aws_vpc_id" {
 variable "ami_map" {
   description = "AMI mapping for GHE 2.x.y installation based on AWS region"
   default = {
+    us-east-1-2.9.2      = "ami-1a18a00c"
     us-east-1-2.8.7      = "ami-c3fe27d5"
     ap-northeast-1-2.7.4 = "ami-8dc211ec"
     ap-northeast-2-2.7.4 = "ami-b65386d8"

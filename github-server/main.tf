@@ -43,12 +43,6 @@ resource "aws_iam_policy_attachment" "iam_ecr_attach" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchFullAccess"
 }
 
-# EIP required since NetScaler rule must allow admin ssh access for replication
-resource "aws_eip" "ghe-server-ip" {
-  instance = "${aws_instance.ghe-server.id}"
-  vpc = true
-}
-
 # GHE Server security group - https://help.github.com/enterprise/2.5/admin/guides/installation/network-ports-to-open/
 resource "aws_security_group" "ghe-server" {
   name = "${var.dns_name} sg"
@@ -178,7 +172,7 @@ provider "aws" {
   secret_key = "${var.aws_secret_key}"
   region = "${var.aws_region}"
 }
-resource "template_file" "attributes-json" {
+data "template_file" "attributes-json" {
   template    = "${file("${path.module}/files/attributes-json.tpl")}"
   vars {
     host      = "${var.hostname}"
@@ -193,7 +187,8 @@ resource "aws_instance" "ghe-server" {
   count = "${var.server_count}"
   instance_type = "${var.aws_flavor}"
   associate_public_ip_address = "${var.public_ip}"
-  subnet_id = "${var.aws_subnet_id}"
+  availability_zone = "${var.primary_az}"
+  subnet_id = "${var.aws_primary_subnet_id}"
   vpc_security_group_ids = ["${aws_security_group.ghe-server.id}"]
   key_name = "${var.aws_key_name}"
   user_data = "${file("userdata.sh")}"
@@ -233,32 +228,10 @@ resource "aws_instance" "ghe-server" {
   }
   
 }
-resource "template_file" "ghe-server-creds" {
+data "template_file" "ghe-server-creds" {
   template = "${file("${path.module}/files/ghe-server-creds.tpl")}"
   vars {
     pass = "${base64sha256(aws_instance.ghe-server.id)}"
     fqdn = "${aws_instance.ghe-server.tags.Name}"
   }
-}
-resource "null_resource" "ghe-configure" {
-  # Use the API to setup the rest from JSON file
-  provisioner "local-exec" {
-    command = "sleep 5 && curl -kLs --resolve ${aws_instance.ghe-server.tags.Name}:8443:${aws_instance.ghe-server.public_ip} -X POST 'https://${aws_instance.ghe-server.tags.Name}:8443/setup/api/start' -F license=@${var.ghe_license} -F 'password=${base64sha256(aws_instance.ghe-server.id)}' -F 'settings=<${var.ghe_settings}'"
-  }
-  # Tell GHE to start configuring
-  provisioner "local-exec" {
-    command = "sleep 2 && curl -kLs --resolve ${aws_instance.ghe-server.tags.Name}:8443:${aws_instance.ghe-server.public_ip} -X POST 'https://api_key:${replace(base64sha256(aws_instance.ghe-server.id), "/", "%2F")}@${aws_instance.ghe-server.tags.Name}:8443/setup/api/configure'"
-  }
-  # Check configuration status
-  provisioner "local-exec" {
-    command = "sleep 2 && curl -kLs --resolve ${aws_instance.ghe-server.tags.Name}:8443:${aws_instance.ghe-server.public_ip} -X GET 'https://api_key:${replace(base64sha256(aws_instance.ghe-server.id), "/", "%2F")}@${aws_instance.ghe-server.tags.Name}:8443/setup/api/configcheck'"
-  }
-}
-
-resource "aws_route53_record" "github-enterprise" {
-  zone_id = "${var.dns_zone_id}"
-  name    = "${var.dns_name}"
-  type    = "A"
-  ttl     = "300"
-  records = [ "${aws_eip.ghe-server-ip.public_ip}" ]
 }
