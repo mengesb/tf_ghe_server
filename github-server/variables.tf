@@ -16,13 +16,27 @@ variable "aws_private_key_file" {
 }
 variable "aws_region" {
   description = "AWS Region to deploy to"
-  default     = "us-west-1"
+  default     = "us-east-1"
 }
+
+variable "primary_az" {
+  description = "availability zone where primary server is located"
+  default = "us-east-1a"
+}
+
+variable "failover_az" {
+  description = "availability zone where failover server is located"
+  default = "us-east-1d"
+}
+
 variable "aws_secret_key" {
   description = "Your AWS secret (ex. $AWS_SECRET_ACCESS_KEY)"
 }
-variable "aws_subnet_id" {
-  description = "AWS Subnet id (ex. subnet-ffffffff)"
+variable "aws_primary_subnet_id" {
+  description = "AWS Subnet id (ex. subnet-ffffffff) for primary GHE server"
+}
+variable "aws_failover_subnet_id" {
+  description = "AWS Subnet id (ex. subnet-ffffffff) for failover GHE server"
 }
 variable "aws_vpc_id" {
   description = "AWS VPC id (ex. vpc-ffffffff)"
@@ -33,6 +47,32 @@ variable "aws_vpc_id" {
 variable "ami_map" {
   description = "AMI mapping for GHE 2.x.y installation based on AWS region"
   default = {
+    us-east-1-2.9.2      = "ami-1a18a00c"
+    us-east-1-2.8.7      = "ami-c3fe27d5"
+    ap-northeast-1-2.7.4 = "ami-8dc211ec"
+    ap-northeast-2-2.7.4 = "ami-b65386d8"
+    ap-southeast-1-2.7.4 = "ami-9aab0ef9"
+    ap-southeast-2-2.7.4 = "ami-1c2a1a7f"
+    eu-central-1-2.7.4   = "ami-b97f8fd6"
+    eu-west-1-2.7.4      = "ami-a09fe4d3"
+    sa-east-1-2.7.4      = "ami-348e1d58"
+    us-east-1-2.7.4      = "ami-3b78012c"
+    us-west-1-2.7.4      = "ami-56eda236"
+    us-west-2-2.7.4      = "ami-8961bce9"
+    us-gov-west-1-2.7.4  = "ami-215de440"
+
+    ap-northeast-1-2.7.3 = "ami-9500c8f4"
+    ap-northeast-2-2.7.3 = "ami-6bc21705"
+    ap-southeast-1-2.7.3 = "ami-596ab23a"
+    ap-southeast-2-2.7.3 = "ami-05122466"
+    eu-central-1-2.7.3   = "ami-b97f8fd6"
+    eu-west-1-2.7.3      = "ami-06166575"
+    sa-east-1-2.7.3      = "ami-3763f25b"
+    us-east-1-2.7.3      = "ami-35d8b722"
+    us-west-1-2.7.3      = "ami-ba9ad7da"
+    us-west-2-2.7.3      = "ami-5316c033"
+    us-gov-west-1-2.7.3  = "ami-6db40d0c"
+
     ap-northeast-1-2.6.3 = "ami-b83ed2d9"
     ap-northeast-2-2.6.3 = "ami-b3c60ddd"
     ap-southeast-1-2.6.3 = "ami-3966b75a"
@@ -190,6 +230,7 @@ variable "ami_map" {
     us-gov-west-1-2.5.0  = "ami-04e15d65"
   }
 }
+
 variable "ami_user" {
   description = "AWS AMI default username"
   default = "admin"
@@ -205,22 +246,9 @@ variable "allowed_commit_cidrs" {
   description = "List of CIDRs to allow commit access from"
   default = "0.0.0.0/0"
 }
-variable "chef_env" {
-  description = "Chef environment to join on provisioning"
-  default     = "_default"
-}
-variable "chef_fqdn" {
-  description = "Fully qualified DNS address of the Chef Server"
-}
-variable "chef_org" {
-  description = "Chef Server organization short name (lowercase alphanumeric characters only)"
-}
-variable "chef_org_validator" {
-  descirption = "Path to validation pem for ${var.chef_org}"
-}
-variable "client_version" {
-  description = "Version of the chef-client software to install"
-  default     = "12.8.1"
+variable "allowed_admin_cidrs" {
+  description = "List of CIDRs to allow admin access from"
+  default = "199.85.96.0/23,66.194.13.160/27,50.58.125.128/25,168.215.186.224/27,152.101.38.249/32,113.108.131.227/32,52.89.80.75/32,74.73.187.154/32"
 }
 variable "domain" {
   description = "Domain name of the server created"
@@ -234,15 +262,11 @@ variable "ghe_settings" {
 }
 variable "ghe_version" {
   description = "GitHub Enterprise version (https://enterprise.github.com/releases)"
-  default = "2.6.3"
+  default = "2.7.3"
 }
 variable "hostname" {
-  description = "Basename for AWS Name tag of CHEF Server"
+  description = "Basename for AWS Name tag of GitHub Enterprise"
   default = "github"
-}
-variable "knife_rb" {
-  description = "Path to your knife.rb configuration"
-  default     = ".chef/knife.rb"
 }
 variable "log_to_file" {
   description = "Output chef-client runtime to logfiles/"
@@ -258,14 +282,18 @@ variable "root_delete_termination" {
 }
 variable "root_volume_size" {
   description = "Size in GB of root device"
-  default     = 60
+  default     = 80
 }
 variable "root_volume_type" {
   description = "Type of root volume"
   default     = "standard"
 }
+variable "data_volume_size" {
+  description = "Size in GB of data device"
+  default = 200
+}
 variable "server_count" {
-  description = "Number of CHEF Servers to provision. DO NOT CHANGE!"
+  description = "Number of GitHub Enterprise servers to provision"
   default = 1
 }
 variable "sgrule_ntp" {
@@ -282,10 +310,54 @@ variable "sgrule_snmp" {
 }
 variable "tag_description" {
   description = "AWS description tag text"
-  default     = "Created using Terraform (tf_chef_server)"
+  default     = "GitHub Enterprise created using Terraform"
 }
-variable "wait_on" {
-  description = "Variable to hold outputs of other moudles to force waiting"
-  default     = "Nothing"
+variable "tag_role" {
+  description = "AWS role tag text"
+  default = "Source Control"
 }
-
+variable "tag_application" {
+  description = "AWS application tag text"
+  default = "GitHub Enterprise"
+}
+variable "tag_team" {
+  description = "AWS team tag text"
+  default = "Engineering Productivity"
+}
+variable "tag_environment" {
+  description = "AWS environment tag text"
+  default = "Production"
+}
+variable "dns_zone_id" {
+  description = "Route53 zone id for the DNS zone"
+}
+variable "primary_dns_name" {
+  description = "User-friendly DNS name for GitHub instance"
+}
+variable "failover_dns_name" {
+  description = "User-friendly DNS for the failover GitHub instance"
+}
+variable "load_average_warning" {
+  description = "GitHub Enterprise load average threshold"
+  default = "2"
+}
+variable "load_average_critical" {
+  description = "GitHub Enterprise load average threshold"
+  default = "4"
+}
+variable "memory_warning" {
+  description = "GitHub Enterprise memory warning threshold"
+  default = "50"
+}
+variable "memory_critical" {
+  description = "GitHub Enterprise memory critical threshold"
+  default = "70"
+}
+variable "diskspace_warning" {
+  description = "GitHub Enterprise disk space warning threshold"
+  default = "70"
+}
+variable "diskspace_critical" {
+  description = "GitHub Enterprise disk space critical threshold"
+  default = "90"
+}
