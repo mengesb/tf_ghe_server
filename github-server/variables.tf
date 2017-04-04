@@ -331,8 +331,11 @@ variable "tag_environment" {
 variable "dns_zone_id" {
   description = "Route53 zone id for the DNS zone"
 }
-variable "dns_name" {
+variable "primary_dns_name" {
   description = "User-friendly DNS name for GitHub instance"
+}
+variable "failover_dns_name" {
+  description = "User-friendly DNS for the failover GitHub instance"
 }
 variable "load_average_warning" {
   description = "GitHub Enterprise load average threshold"

@@ -45,11 +45,11 @@ resource "aws_iam_policy_attachment" "iam_ecr_attach" {
 
 # GHE Server security group - https://help.github.com/enterprise/2.5/admin/guides/installation/network-ports-to-open/
 resource "aws_security_group" "ghe-server" {
-  name = "${var.dns_name} sg"
+  name = "${var.primary_dns_name} sg"
   description = "GitHub Enterprise"
   vpc_id = "${var.aws_vpc_id}"
   tags = {
-    Name = "${var.dns_name} sg"
+    Name = "${var.primary_dns_name} sg"
     Description = "${var.tag_description}"
     Role = "${var.tag_role}"
     Team = "${var.tag_team}"
@@ -194,7 +194,7 @@ resource "aws_instance" "ghe-server" {
   user_data = "${file("userdata.sh")}"
   iam_instance_profile = "github_instance_profile2"
   tags = {
-    Name = "${var.dns_name}"
+    Name = "${var.primary_dns_name}"
     Description = "${var.tag_description}"
     Role = "${var.tag_role}"
     Team = "${var.tag_team}"

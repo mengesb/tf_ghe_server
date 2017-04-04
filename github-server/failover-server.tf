@@ -13,7 +13,7 @@ resource "aws_instance" "ghe-failover-server" {
   user_data = "${file("userdata.sh")}"
   iam_instance_profile = "github_instance_profile2"
   tags = {
-    Name = "${var.dns_name}"
+    Name = "${var.failover_dns_name}"
     Description = "${var.tag_description}"
     Role = "${var.tag_role}"
     Team = "${var.tag_team}"
@@ -56,7 +56,7 @@ resource "aws_eip" "failover_eip" {
 # DNS entry in route53
 resource "aws_route53_record" "failover-server-dns" {
   zone_id         = "${var.dns_zone_id}"
-  name            = "git-failover.eng.xogrp.com"
+  name            = "${var.failover_dns_name}"
   type            = "A"
   ttl             = "300"
   records         = ["${aws_eip.failover_eip.public_ip}"]
